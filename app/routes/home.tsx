@@ -107,7 +107,7 @@ export default function Home() {
         <div className="bg-black text-white flex flex-col items-center w-100 p-4 rounded-2xl">
           <h2 className="text-lg font-semibold">GPS-Lokasjon</h2>
           {locationError ?
-            <p className="text-red-300">{locationError}</p>
+            <p className="text-red-500">{locationError}</p>
           : location ?
             <>
               <p>Breddegrad: {location.latitude.toFixed(5)}</p>
@@ -121,7 +121,7 @@ export default function Home() {
       <div className="bg-white text-black flex flex-col items-center w-140 p-4 ">
         <h2 className="text-lg font-semibold">Vær (Yr)</h2>
         {weatherError ?
-          <p className="text-red-300">{weatherError}</p>
+          <p className="text-red-500">{weatherError}</p>
         : weather ?
           <>
             <img
@@ -134,6 +134,27 @@ export default function Home() {
         : location ?
           <p>Henter værdata</p>
         : <p>Venter på posisjon...</p>}
+      </div>
+
+      {/* Adresse */}
+      <div className="bg-white text-black flex flex-col items-center w-140 p-4">
+        <h2 className="text-lg font-semibold">Adresse (GeoNorge)</h2>
+        {addressError ?
+          <p className="text-red-500">{addressError}</p>
+        : address ?
+          <p>{address.addressetekst}</p>
+        : location ?
+          <p>Henter adresse...</p>
+        : <p>Venter på posisjon...</p>}
+      </div>
+
+      <div className="bg-white flex flex-col items-center w-140 p-4 rounded-b-2xl">
+        <button
+          onClick={updatePosition}
+          disabled={loading}
+          className="bg-black text-white px-10 py-1 rounded-2xl hover:bg-black disabled:opacity-50">
+          {loading ? "oppdaterer..." : "Oppdater Lokasjon"}
+        </button>
       </div>
     </div>
   );
