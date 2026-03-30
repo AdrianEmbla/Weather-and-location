@@ -125,7 +125,7 @@ export default function Home() {
         : weather ?
           <>
             <img
-              src={`https://api.met.no/images/weathericons/png/${weather.symbolCode}.png`}
+              src={`https://raw.githubusercontent.com/metno/weathericons/main/weather/png/${weather.symbolCode}.png`}
               alt={weather.symbolCode}
               className="w-16 h-16"
             />
