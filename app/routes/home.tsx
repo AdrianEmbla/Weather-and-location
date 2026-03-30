@@ -152,7 +152,7 @@ export default function Home() {
         <button
           onClick={updatePosition}
           disabled={loading}
-          className="bg-black text-white px-10 py-1 rounded-2xl hover:bg-black disabled:opacity-50">
+          className="bg-fuchsia-500 font-semibold text-white px-10 py-1 rounded-2xl hover:bg-fuchsia-700 disabled:opacity-50">
           {loading ? "oppdaterer..." : "Oppdater Lokasjon"}
         </button>
       </div>
