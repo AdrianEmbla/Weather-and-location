@@ -10,17 +10,17 @@ interface WeatherData {
   symbolCode: string;
 }
 
-interface AddressData {
-  addressetekst: string;
+interface AdressData {
+  adressetekst: string;
 }
 
 export default function Home() {
   const [location, setLocation] = useState<LocationData | null>(null);
   const [weather, setWeather] = useState<WeatherData | null>(null);
-  const [address, setAddress] = useState<AddressData | null>(null);
+  const [adress, setAdress] = useState<AdressData | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
   const [weatherError, setWeatherError] = useState<string | null>(null);
-  const [addressError, setAddressError] = useState<string | null>(null);
+  const [adressError, setAdressError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const fetchWeather = async (lat: number, lon: number) => {
@@ -44,19 +44,19 @@ export default function Home() {
 
   const fetchAddress = async (lat: number, lon: number) => {
     try {
-      setAddressError(null);
+      setAdressError(null);
       const res = await fetch(
-        `https://ws.geonorge.no/adresser/v1/punktsok?lon=${lon}&lat=${lat}&radius=50`,
+        `https://ws.geonorge.no/adresser/v1/punktsok?lon=${lon}&lat=${lat}&radius=60`,
       );
       if (!res.ok) throw new Error(`GeoNorge API feil: ${res.status}`);
       const data = await res.json();
-      if (data.addresser && data.addresser.length > 0) {
-        setAddress(data.addresser[0].addresstekst);
+      if (data.adresser && data.adresser.length > 0) {
+        setAdress({ adressetekst: data.adresser[0].adressetekst });
       } else {
-        setAddressError("Ingen adresse funnet i nærheten");
+        setAdressError("Ingen adresse funnet i nærheten");
       }
     } catch (err: any) {
-      setAddressError(err.message || "Kunne ikke hente adresse");
+      setAdressError(err.message || "Kunne ikke hente adresse");
     }
   };
 
@@ -139,10 +139,10 @@ export default function Home() {
       {/* Adresse */}
       <div className="bg-white text-black flex flex-col items-center w-140 p-4">
         <h2 className="text-lg font-semibold">Adresse (GeoNorge)</h2>
-        {addressError ?
-          <p className="text-red-500">{addressError}</p>
-        : address ?
-          <p>{address.addressetekst}</p>
+        {adressError ?
+          <p className="text-red-500">{adressError}</p>
+        : adress ?
+          <p>{adress.adressetekst}</p>
         : location ?
           <p>Henter adresse...</p>
         : <p>Venter på posisjon...</p>}
