@@ -100,7 +100,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-black">
-      <div className="bg-white flex flex-col items-center h-auto w-140 p-6 gap-4 rounded-2xl">
+      <div className="bg-white flex flex-col items-center h-auto w-140 p-6 gap-4 rounded-t-2xl">
         <h1 className="text-2xl font-bold text-black">Vær og Lokasjon</h1>
 
         {/* GPS Lokasjon */}
@@ -115,6 +115,25 @@ export default function Home() {
             </>
           : <p>Henter posisjon...</p>}
         </div>
+      </div>
+
+      {/* Vær */}
+      <div className="bg-white text-black flex flex-col items-center w-140 p-4 ">
+        <h2 className="text-lg font-semibold">Vær (Yr)</h2>
+        {weatherError ?
+          <p className="text-red-300">{weatherError}</p>
+        : weather ?
+          <>
+            <img
+              src={`https://api.met.no/images/weathericons/png/${weather.symbolCode}.png`}
+              alt={weather.symbolCode}
+              className="w-16 h-16"
+            />
+            <p>Temperatur: {weather.temperature}°C</p>
+          </>
+        : location ?
+          <p>Henter værdata</p>
+        : <p>Venter på posisjon...</p>}
       </div>
     </div>
   );
