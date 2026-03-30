@@ -97,4 +97,25 @@ export default function Home() {
   useEffect(() => {
     updatePosition();
   }, [updatePosition]);
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-black">
+      <div className="bg-white flex flex-col items-center h-auto w-140 p-6 gap-4 rounded-2xl">
+        <h1 className="text-2xl font-bold text-black">Vær og Lokasjon</h1>
+
+        {/* GPS Lokasjon */}
+        <div className="bg-black text-white flex flex-col items-center w-100 p-4 rounded-2xl">
+          <h2 className="text-lg font-semibold">GPS-Lokasjon</h2>
+          {locationError ?
+            <p className="text-red-300">{locationError}</p>
+          : location ?
+            <>
+              <p>Breddegrad: {location.latitude.toFixed(5)}</p>
+              <p>Lengegrad: {location.longitude.toFixed(5)} </p>
+            </>
+          : <p>Henter posisjon...</p>}
+        </div>
+      </div>
+    </div>
+  );
 }
