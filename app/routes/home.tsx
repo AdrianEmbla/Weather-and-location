@@ -59,4 +59,42 @@ export default function Home() {
       setAddressError(err.message || "Kunne ikke hente adresse");
     }
   };
+
+  const updatePosition = useCallback(() => {
+    if (!navigator.geolocation) {
+      setLocationError("Geolokasjon støttes ikke av nettleseren");
+      return;
+    }
+    setLoading(true);
+    setLocationError(null);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setLocation({ latitude, longitude });
+        fetchWeather(latitude, longitude);
+        fetchAddress(latitude, longitude);
+        setLoading(false);
+      },
+      (error) => {
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            setLocationError("Nektet tilgang til posisjon");
+            break;
+          case error.POSITION_UNAVAILABLE:
+            setLocationError("Posisjoninformasjon er ikke tilgjengelig");
+            break;
+          case error.TIMEOUT:
+            setLocationError("Forespørsel om posisjon ble tidsavbrutt");
+            break;
+          default:
+            setLocationError("En ukjent feil oppsto");
+        }
+        setLoading(false);
+      },
+    );
+  }, []);
+
+  useEffect(() => {
+    updatePosition();
+  }, [updatePosition]);
 }
