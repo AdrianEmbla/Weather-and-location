@@ -46,7 +46,7 @@ export default function Home() {
     try {
       setAdressError(null);
       const res = await fetch(
-        `https://ws.geonorge.no/adresser/v1/punktsok?lon=${lon}&lat=${lat}&radius=60`,
+        `https://ws.geonorge.no/adresser/v1/punktsok?lon=${lon}&lat=${lat}&radius=1000`,
       );
       if (!res.ok) throw new Error(`GeoNorge API feil: ${res.status}`);
       const data = await res.json();
